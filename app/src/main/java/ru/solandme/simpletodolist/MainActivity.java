@@ -3,6 +3,7 @@ package ru.solandme.simpletodolist;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,7 +11,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     ArrayList<String> myList = new ArrayList<>();
     ArrayAdapter listAdapter;
     EditText editText;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         todoList.setAdapter(listAdapter);
         button.setOnClickListener(this);
-
+        todoList.setOnItemClickListener(this);
 
     }
 
@@ -39,5 +40,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         myList.add(editText.getText().toString());
         listAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        myList.remove(i);
+        listAdapter.notifyDataSetChanged();
+
     }
 }
